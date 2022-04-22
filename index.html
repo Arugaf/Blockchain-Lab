@@ -1,0 +1,1042 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blockchain Lab</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__left">
+    <div class="stackedit__toc">
+      
+<ul>
+<li><a href="#блокчейн-и-dapp">Блокчейн и DApp</a>
+<ul>
+<li><a href="#содержание">Содержание</a></li>
+<li><a href="#введение">Введение</a></li>
+<li><a href="#про-блокчейн-и-децентрализованные-приложения">Про блокчейн и децентрализованные приложения</a></li>
+<li><a href="#о-фреймворке-и-языке">О фреймворке и языке</a></li>
+<li><a href="#настройка-окружения">Настройка окружения</a></li>
+<li><a href="#создание-простого-децентрализованного-приложения">Создание простого децентрализованного приложения</a></li>
+<li><a href="#развертывание-собственной-блокчейн-сети">Развертывание собственной блокчейн сети</a></li>
+<li><a href="#задание">Задание</a></li>
+<li><a href="#полезные-ссылки">Полезные ссылки</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+  <div class="stackedit__right">
+    <div class="stackedit__html">
+      <h1 id="блокчейн-и-dapp">Блокчейн и DApp</h1>
+<blockquote>
+<p>Разработка децентрализованных приложений (DApp) на основе блокчейна с использованием фреймворка <strong>Substrate</strong>.</p>
+</blockquote>
+<h2 id="содержание">Содержание</h2>
+<ol>
+<li><a href="#%D0%B2%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5">Введение</a></li>
+<li><a href="#%D0%BF%D1%80%D0%BE-%D0%B1%D0%BB%D0%BE%D0%BA%D1%87%D0%B5%D0%B9%D0%BD-%D0%B8-%D0%B4%D0%B5%D1%86%D0%B5%D0%BD%D1%82%D1%80%D0%B0%D0%BB%D0%B8%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D1%8B%D0%B5-%D0%BF%D1%80%D0%B8%D0%BB%D0%BE%D0%B6%D0%B5%D0%BD%D0%B8%D1%8F">Про блокчейн и децентрализованные приложения</a></li>
+<li><a href="#%D0%BE-%D1%84%D1%80%D0%B5%D0%B9%D0%BC%D0%B2%D0%BE%D1%80%D0%BA%D0%B5-%D0%B8-%D1%8F%D0%B7%D1%8B%D0%BA%D0%B5">О фреймворке и языке</a>
+<ol>
+<li><a href="#%D0%B2%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5-%D0%B2-substrate">Введение в Substrate</a></li>
+<li><a href="#%D1%8F%D0%B7%D1%8B%D0%BA-rust">Язык Rust</a></li>
+</ol>
+</li>
+<li><a href="#%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0-%D0%BE%D0%BA%D1%80%D1%83%D0%B6%D0%B5%D0%BD%D0%B8%D1%8F">Настройка окружения</a>
+<ol>
+<li><a href="#docker">Docker</a></li>
+<li><a href="#substrate">Substrate</a></li>
+</ol>
+</li>
+<li><a href="#%D1%81%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-%D0%BF%D1%80%D0%BE%D1%81%D1%82%D0%BE%D0%B3%D0%BE-%D0%B4%D0%B5%D1%86%D0%B5%D0%BD%D1%82%D1%80%D0%B0%D0%BB%D0%B8%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%BF%D1%80%D0%B8%D0%BB%D0%BE%D0%B6%D0%B5%D0%BD%D0%B8%D1%8F">Создание простого децентрализованного приложения</a></li>
+<li><a href="#%D1%80%D0%B0%D0%B7%D0%B2%D0%B5%D1%80%D1%82%D1%8B%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5-%D1%81%D0%BE%D0%B1%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D0%BE%D0%B9-%D0%B1%D0%BB%D0%BE%D0%BA%D1%87%D0%B5%D0%B9%D0%BD-%D1%81%D0%B5%D1%82%D0%B8">Развертывание собственной блокчейн сети</a></li>
+<li><a href="#%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5">Задание</a> &lt;—</li>
+<li><a href="#%D0%BF%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5-%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B8">Полезные ссылки</a></li>
+</ol>
+<h2 id="введение">Введение</h2>
+<p>В данной лабораторной работе рассматриваются основы создания децентрализованных приложений и приватных блокчейн-сетей</p>
+<p>Изучаются базовые понятия (блокчейн, транзакции, консенсус, DApp) и методы работы с данными в блокчейнах.</p>
+<p>По итогу предлагается создать собственное децентрализованное приложение, реализующее концепцию <strong>PoA</strong>, поднять для него сеть узлов, а также написать фронтенд для взаимодействия с пользователями получившегося DApp.</p>
+<h2 id="про-блокчейн-и-децентрализованные-приложения">Про блокчейн и децентрализованные приложения</h2>
+<blockquote>
+<p>Скачивание необходимых инструментов, и компиляция шаблонов может занять какое-то время, поэтому сначала стоит <a href="#%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0-%D0%BE%D0%BA%D1%80%D1%83%D0%B6%D0%B5%D0%BD%D0%B8%D1%8F">настроить окружение</a>.</p>
+</blockquote>
+<p><strong>Блокчейн</strong> - технология, в основе своей представляющая цепочку (<em>engl.</em> chain) блоков, содержащих некие данные, и связанных между собой тем, что каждый последующий блок содержит хеш предыдущего.</p>
+<p>Одной из ключевых особенностей блокчейна является значительная трудоемкость попытки изменить его состояние путем изменения уже существующего блока, т.к. это повлечет за собой цепочку изменений с необходимостью заново вычислить все последующие блоки. В сочетании с алгоритмами консенсуса это обеспечивает почти полную гарантию перманентности записанных данных.</p>
+<p>Блокчейн является основой множества децентрализованных приложений, работающих, как правило, на основе <strong>peer-to-peer сети</strong>. Новые узлы могут свободно подключаться к этой сети и сразу начинают генерировать (майнить) новые блоки с информацией.</p>
+<p>Т.к. узлов много, то они могут генерировать множество разных блоков, содержащих одинаковые или различные транзакции. <strong>Транзакция</strong> определяет какую-то полезную нагрузку (информацию), добавляющуюся в блокчейн. Это может быть информация о покупке какого-то объекта, о передаче или начислении некой валюты, записью об изменении состояния и т.п.</p>
+<p>Из-за того, что блоки могут быть разными, блокчейн представляет собой не просто связный список, а <strong>DAG</strong> - Directed Acyclic Graph (направленный ациклический граф). Консистентность состояния блокчейна между различными узлами достигается с помощью <strong>алгоритмов консенсуса</strong>. Эти алгоритмы обеспечивают и гарантируют существование единственной основной цепочки блоков на всех узлах конкретной сети.</p>
+<p>Для уменьшения нагрузки на блокчейн-сеть и увеличения ее безопасности, а также других причин (которые зависят от конкретной цели применения блокчейна), майнинг каждого нового блока сопровождается выполнением какой-то работы или иными затратами реальных физических ресурсов. Это позволит обеспечить определенный уровень защиты сети от атак с целью изменения состояния блокчейна или попытки нагрузить ее множеством некорректных данных.</p>
+<p>Как правило современные блокчейны используют алгоритмы консенсунса из классов <strong>Proof of Stake</strong> (PoS, доказательство владения) и <strong>Proof of Work</strong> (PoW, доказательство выполнения работы). Ethereum, Bitcoin, Polkadot и многие другие крупные сети используют алгоритмы консенсуса, основанные именно на этих классах. Помимо этого также существуют классы <strong>Proof of Space</strong>, <strong>Proof of Authority</strong> и др.</p>
+<p>Блокчейн хорошо подходит не только для создания систем и приложений, предусматривающих открытое взаимодействие между пользователями с равными полномочиями (криптовалюты, биржи, финансовые приложения, блокчейны блокчейнов и т.д.), но и для систем, предусматривающих некоторую регуляцию с разделением прав (голосования, системы электронной документации, различные реестры и пр.), а также для систем смешанных типов (например, игры с использованием <strong>NFT</strong> и системы хранения данных).</p>
+<p>Последние два типа систем подразумевают наличие частных сетей, которые развертываются самостоятельно. Состояние блокчейна в таких системах может полностью или частично контролироваться отдельными лицами, вплоть до полной замены основной цепочки и управлением генерацией новых блоков. Такие системы могут в принципе работать без применения PoW или PoS.</p>
+<p>Приложения, работающие на основе блокчейна, называющиеся <strong>DApp</strong> (децентрализованные приложения), обычно создаются на базе существующих фреймворков и сетей. Ethereum, например, позволяет создавать такие приложения с использованием <strong>смарт-контрактов</strong>, работающих прямо на блокчейне этой сети. Пользователи через транзакции могут взаимодействовать с таким смарт-контрактом, в котором заранее прописаны некоторые условия, функции и изменяемое состояние.</p>
+<p>В данной лабораторной работе, однако, будет рассматриваться создание собственного DApp не с использованием смарт-контрактов, а через создание собственного блокчейна. Ключевое отличие таких приложений от основанных на смарт-контрактах в том, что последние подразумевают использование уже функционирующей сети и не могут изменять ее поведение. Тогда как создание собственного блокчейна позволяет более гибко настраивать взаимодействие с ним.</p>
+<h2 id="о-фреймворке-и-языке">О фреймворке и языке</h2>
+<h3 id="введение-в-substrate">Введение в Substrate</h3>
+<p><strong><a href="https://substrate.io/">Substrate</a></strong> - фреймворк для создания собственных блокчейнов общего назначения. Substrate использует Rust в качестве языка программирования и может компилироваться (предпочтительно) в WebAssembly.</p>
+<h4 id="архитектура">Архитектура</h4>
+<p>Архитектура DApp на основе Substrate выглядит следующим образом:</p>
+<p><img src="https://docs.substrate.io/static/262e7fe9f1f7d3db5dd8cee450d77c86/c1b63/substrate-arch.png" alt="Архитектура узла"></p>
+<ul>
+<li>
+<p><strong>Storage</strong> - обеспечивает хранение некой значимой информации на блокчейне. Имеется множество хранилищ, часть из которых определяется разработчиком, и которые хранят разные данные, необходимые для работы приложения. В частности, Wasm бинарник, обеспечивающий работу каждого отдельного узла, тоже хранится на блокчейне. <strong>FRAME</strong> (<em>прим.</em> будет рассказано ниже) предоставляет следующие <strong>типажи</strong> для storage:</p>
+<ul>
+<li>одиночное значение (как переменная);</li>
+<li>key-value хранилище (map);</li>
+<li>double-map (два ключа и одно значение);</li>
+<li>N-map (N ключей и одно значение);</li>
+</ul>
+</li>
+<li>
+<p><strong>Runtime</strong> - определяет логику работы децентрализованного приложения, в частности, правила генерации новых блоков с транзакциями. Хранится на блокчейне, что позволяет произвести <strong>forkless upgrade</strong> - обновление узлов во всей сети без прекращения ее работы.</p>
+</li>
+<li>
+<p><strong>P2P-сеть</strong> - возможность работы блокчейн-сети по одноранговой сети с помощью <a href="https://libp2p.io/">libp2p</a>.</p>
+</li>
+<li>
+<p><strong>Consensus</strong> - алгоритмы, позволяющие добиться  <strong>консенсуса</strong> (согласия) о состоянии блокчейна внутри сети для всех узлов.</p>
+</li>
+<li>
+<p><strong>RPC</strong> - Remote Procedure Call, позволяет взаимодействовать с децентрализованным приложением. Обеспечивается нативная поддержка <a href="https://en.reactjs.org/">React</a>.</p>
+</li>
+<li>
+<p><strong>Telemetry</strong> - различные метрики, доступ к которым осуществляется через <a href="https://prometheus.io/">Prometheus</a>.</p>
+</li>
+</ul>
+<h4 id="разработка-dapp">Разработка DApp</h4>
+<p><strong>FRAME</strong> - Framework for Runtime Aggregation of Modularized Entities, набор различных модулей и библиотек. Подобные модули называются pallets (паллеты) и содержат некоторую логику (например, какие-то паллеты определяют алгоритм консенсуса, другие добавляют валюту и т.д.).</p>
+<p><img src="https://docs.substrate.io/static/3499b4465d746bd0dcb22e34779d5546/c1b63/frame-arch.png" alt="FRAME"></p>
+<p><strong>Dispatchables</strong> - функции, которые могут быть вызваны за пределами системы (например, пользователем) и изменяющие ее состояние.</p>
+<p><strong>Config</strong> - описывает набор различных типов и параметров паллета.</p>
+<p><strong>Events</strong> - каждый модуль (паллет) может генерировать различные сообщения (события) при выполнении каких-то условий. События задаются разработчиком и оповещают внешние объекты (пользователей, приложения и др.) о том, что что-то произошло, передавая при этом какие-то данные.</p>
+<p><strong>Обработка ошибок</strong> -  рантайм код <strong>никогда</strong> (!) не должен выбрасывать исключение (panic в терминах Rust). При использовании FRAME в Substrate, вызываемые интерфейсные функции (dispatchables) должны возвращать особый <a href="https://docs.substrate.io/rustdocs/latest/frame_support/dispatch/type.DispatchResult.html">тип</a>, который может <a href="https://docs.substrate.io/rustdocs/latest/frame_support/dispatch/enum.DispatchError.html">указывать</a> на то, что в ходе выполнения функции произошла ошибка.</p>
+<h3 id="язык-rust">Язык Rust</h3>
+<p>Для написания децентрализованных приложений с использованием фреймворка Substrate, используется язык Rust.</p>
+<p><a href="https://www.rust-lang.org/"><strong>Rust</strong></a> - мультипарадигмальный компилируемый язык со строгой статической типизацией, сочетающие парадигмы функционального и процедурного программирования с объектной системой, основанной на <strong>типажах</strong> (трейтах, <em>engl.</em> traits).</p>
+<p>Rust синтаксически близок к си-подобным языкам программирования, но обладает своей собственной специфической моделью памяти, основанной на механизмах <strong>владения</strong> (ownership) в соответствии с идиомой <a href="https://en.wikipedia.org/wiki/Resource_acquisition_is_initialization">RAII</a> и <strong>валидации ссылок</strong>, которая реализовывается через понятие <strong>времени жизни</strong> (lifetime) и <strong>анализатор заимствований</strong> (borrow checker).</p>
+<p>Данная модель позволяет избавиться от сборщика мусора. В совокупности все эти факторы делают Rust по скорости и функциональности сопоставимым с C++, но при этом язык <strong>гарантирует</strong> безопасную работу с памятью, так как возможные ошибки ловятся уже на стадии компиляции.</p>
+<p>Rust поставляется с собственным менеджером пакетов и, одновременно, системой сборки - <strong>Cargo</strong>.</p>
+<p>При использовании Rust в данной лабораторной работе, необходимо знать некоторые базовые вещи (более подробно с языком можно познакомиться по ссылкам: <a href="https://doc.rust-lang.org/book/">en</a>, <a href="https://doc.rust-lang.ru/book/">ru</a>, документацию можно посмотреть <a href="https://doc.rust-lang.org/std/">здесь</a>).</p>
+<ul>
+<li>
+<p>Переменные объявляются ключевым словом <code>let</code>, поддерживается автоматическое выведение типа. <a href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2021&amp;gist=cfc15f2e6c45b413f4c8dfc60ba5083e">Запустить код</a>.</p>
+<pre class=" language-rust"><code class="prism  language-rust"><span class="token keyword">fn</span> type_of<span class="token operator">&lt;</span>T<span class="token operator">&gt;</span><span class="token punctuation">(</span>_<span class="token punctuation">:</span> <span class="token operator">&amp;</span>T<span class="token punctuation">)</span> <span class="token punctuation">-&gt;</span> <span class="token operator">&amp;</span>'<span class="token keyword">static</span> str <span class="token punctuation">{</span>
+    std<span class="token punctuation">:</span><span class="token punctuation">:</span>any<span class="token punctuation">:</span><span class="token punctuation">:</span>type_name<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token operator">&lt;</span>T<span class="token operator">&gt;</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">fn</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// тип выводится автоматически: i32 (целочисленное, 32 бита)</span>
+    <span class="token keyword">let</span> x <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span> 
+    <span class="token function">println!</span><span class="token punctuation">(</span><span class="token string">"{}"</span><span class="token punctuation">,</span> <span class="token function">type_of</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>x<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+    <span class="token comment">// shadowing: можно заново объявить немьютабельную переменную с таким же именем (тип может быть любым)</span>
+    <span class="token comment">// тип указывается явно: i64 (целочисленное, 64 бита)</span>
+    <span class="token keyword">let</span> x<span class="token punctuation">:</span> i64 <span class="token operator">=</span> <span class="token number">6</span><span class="token punctuation">;</span>
+    <span class="token function">println!</span><span class="token punctuation">(</span><span class="token string">"{}"</span><span class="token punctuation">,</span> <span class="token function">type_of</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>x<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+    <span class="token comment">// для констант тип надо указывать обязательно</span>
+    <span class="token comment">// тип указывается явно: u32 (целочисленное беззнаковое, 32 бита)</span>
+    <span class="token keyword">const</span> C<span class="token punctuation">:</span> u32 <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+    <span class="token function">println!</span><span class="token punctuation">(</span><span class="token string">"{}"</span><span class="token punctuation">,</span> <span class="token function">type_of</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>C<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</li>
+<li>
+<p>Работа с ресурсами, которые хранит переменная, осуществляется в соответствии с мув-семантикой, согласно <a href="https://en.wikipedia.org/wiki/Substructural_type_system#Affine_type_systems">аффинным типам</a>. Если тип не реализует <strong>трейт</strong> <code>Copy</code>, то владение ресурсом передается захватившей ее переменной (в том числе и при передаче переменных в функцию). Старая переменная при этом инвалидируется.<br>
+<img src="https://raw.githubusercontent.com/Arugaf/Blockchain-Lab/main/rust-move-copy.svg" alt="Move semantics"></p>
+<p><a href="https://doc.rust-lang.org/std/string/struct.String.html"><code>String</code></a> - сложный тип, который не реализует трейт <code>Copy</code>. <a href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2021&amp;gist=e8a494d31e7ec1a1014cc2bcae8cf13b">Запустить код</a>.</p>
+<pre class=" language-rust"><code class="prism  language-rust"><span class="token keyword">fn</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// Сложный тип String, не реализующий трейт Copy</span>
+    <span class="token keyword">let</span> x <span class="token operator">=</span> String<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token function">from</span><span class="token punctuation">(</span><span class="token string">"x contains string"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">println!</span><span class="token punctuation">(</span><span class="token string">"{}"</span><span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+    <span class="token keyword">let</span> a <span class="token operator">=</span> x<span class="token punctuation">;</span>
+    <span class="token function">println!</span><span class="token punctuation">(</span><span class="token string">"{}"</span><span class="token punctuation">,</span> a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+    <span class="token comment">// Ошибка компиляции, ресурс уже перемещен и им владеет переменная a</span>
+    <span class="token function">println!</span><span class="token punctuation">(</span><span class="token string">"{}"</span><span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p><a href="https://doc.rust-lang.org/std/primitive.str.html"><code>str</code></a> - примитивный тип (utf-8 слайс). <a href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2021&amp;gist=9f3f84f3619a74d1a68a45412b7c01b2">Запустить код</a>.</p>
+<pre class=" language-rust"><code class="prism  language-rust"><span class="token keyword">fn</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// Примитивный тип &amp;str (ссылка), сам str на самом деле не реализует трейт Copy, но копируется область памяти</span>
+    <span class="token keyword">let</span> x <span class="token operator">=</span> <span class="token string">"x contains string"</span><span class="token punctuation">;</span>
+    <span class="token function">println!</span><span class="token punctuation">(</span><span class="token string">"{}"</span><span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+    <span class="token comment">// Адреса a и x не совпадают, разные строки</span>
+    <span class="token keyword">let</span> a <span class="token operator">=</span> x<span class="token punctuation">;</span>
+    <span class="token function">println!</span><span class="token punctuation">(</span><span class="token string">"{}"</span><span class="token punctuation">,</span> a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+    <span class="token function">println!</span><span class="token punctuation">(</span><span class="token string">"{}"</span><span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</li>
+<li>
+<p>Переменная по умолчанию немьютабельна (неизменяема, не путать с константами). Чтобы иметь возможность изменить значение переменной, необходимо использовать ключевое слово <code>mut</code>.</p>
+<p>Переменную <code>x</code> нельзя поменять. <a href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2021&amp;gist=3e0a8906fb53800c46ff10b61af30f5b">Запустить код</a>.</p>
+<pre class=" language-rust"><code class="prism  language-rust"><span class="token keyword">fn</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   <span class="token keyword">let</span> x <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span>
+   <span class="token function">println!</span><span class="token punctuation">(</span><span class="token string">"{}"</span><span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   
+   <span class="token comment">// x - немьютабельная переменная, ошибка компиляции</span>
+   x <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+   <span class="token function">println!</span><span class="token punctuation">(</span><span class="token string">"{}"</span><span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Переменную <code>x</code> можно поменять. <a href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2021&amp;gist=2643a6cb585ebd66e69d67adcccee05e">Запустить код</a>.</p>
+<pre class=" language-rust"><code class="prism  language-rust"><span class="token keyword">fn</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> <span class="token keyword">mut</span> x <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span>
+    <span class="token function">println!</span><span class="token punctuation">(</span><span class="token string">"{}"</span><span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+    x <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+    <span class="token function">println!</span><span class="token punctuation">(</span><span class="token string">"{}"</span><span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</li>
+<li>
+<p>В Rust можно передавать переменные по ссылке, которые всегда валидны (не могут ссылаться на неопределенную область памяти). Также доступны мьютабельные ссылки. При этом одновременно в одном скоупе (который и определяет время жизни (lifetime) переменной) может быть <strong>только одна</strong> мьютабельная ссылка на конкретный ресурс или же <strong>много</strong> немьютабельных ссылок (включая оригинальную переменную, владеющую ресурсом) .<img src="https://raw.githubusercontent.com/Arugaf/Blockchain-Lab/main/rust-reference-mut.svg" alt="Reference and mut reference"></p>
+<p>В этом примере кажется, что присутствует одновременно ссылка на запись и множество на чтение, но на деле компилятор может определить когда в последний раз использовалась переменная. <a href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2021&amp;gist=39778b5a5920079446883577ef862532">Запустить код</a>.</p>
+<pre class=" language-rust"><code class="prism  language-rust"><span class="token keyword">fn</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> <span class="token keyword">mut</span> a <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span>
+    <span class="token keyword">let</span> a_ref_1 <span class="token operator">=</span> <span class="token operator">&amp;</span>a<span class="token punctuation">;</span>
+    <span class="token keyword">let</span> a_ref_2 <span class="token operator">=</span> <span class="token operator">&amp;</span>a<span class="token punctuation">;</span>
+    
+    <span class="token function">println!</span><span class="token punctuation">(</span><span class="token string">"{} {} {}"</span><span class="token punctuation">,</span> a<span class="token punctuation">,</span> a_ref_1<span class="token punctuation">,</span> a_ref_2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+    <span class="token keyword">let</span> a_ref_3 <span class="token operator">=</span> <span class="token operator">&amp;</span>a<span class="token punctuation">;</span>
+    <span class="token function">println!</span><span class="token punctuation">(</span><span class="token string">"{}"</span><span class="token punctuation">,</span> a_ref_3<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+    a <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+    <span class="token function">println!</span><span class="token punctuation">(</span><span class="token string">"{}"</span><span class="token punctuation">,</span> a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+    <span class="token comment">// если раскоментить, то будет ошибка компиляции</span>
+    <span class="token comment">// println!("{}", a_ref_1);</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p><img src="https://raw.githubusercontent.com/Arugaf/Blockchain-Lab/main/rust-mutable-borrow.svg" alt="enter image description here"></p>
+</li>
+<li>
+<p>Функции объявляются ключевым словом <code>fn</code>. Существует понятия <strong>утверждение</strong> (statement) и <strong>выражение</strong> (expression). Тело функции состоит из последовательности утверждений. В конце же может быть (опционально) выражение. Выражения также могут являться частью утверждения. Ключевое отличие выражений от утверждений в том, что последние не возвращают значения. Определение функции является утверждением, а ее вызов - выражением. Функции в Rust являются <a href="https://ru.wikipedia.org/wiki/%D0%A4%D1%83%D0%BD%D0%BA%D1%86%D0%B8%D0%B8_%D0%BF%D0%B5%D1%80%D0%B2%D0%BE%D0%B3%D0%BE_%D0%BA%D0%BB%D0%B0%D1%81%D1%81%D0%B0">объектами первого класса</a>, есть механизм замыканий. <a href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2021&amp;gist=e07c552560345573536c1edba15ff828">Запустить код</a>.</p>
+<pre class=" language-rust"><code class="prism  language-rust"><span class="token comment">// функция принимает i32, выводит его и возвращает обратно</span>
+<span class="token keyword">fn</span> <span class="token function">foo</span><span class="token punctuation">(</span>x<span class="token punctuation">:</span> i32<span class="token punctuation">)</span> <span class="token punctuation">-&gt;</span> i32 <span class="token punctuation">{</span>
+    <span class="token comment">// содержит два утверждения</span>
+    <span class="token function">println!</span><span class="token punctuation">(</span><span class="token string">"foo was called: {}"</span><span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> x<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// функция не принимает параметров, возвращает два числа</span>
+<span class="token keyword">fn</span> <span class="token function">foo_two</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">-&gt;</span> <span class="token punctuation">(</span>i32<span class="token punctuation">,</span> u32<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// выражение - отсутствует точка с запятой и ключевое слово return</span>
+    <span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">,</span> <span class="token number">40</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// функция принимает мьютабельную ссылку на число с плавающей запятой (64 бита) и функтор, </span>
+<span class="token comment">// принимающий два i32 и возвращающий два i32</span>
+<span class="token comment">// функция ничего не возвращает, меняет значение полученной переменной и вызывает функтор</span>
+<span class="token keyword">fn</span> <span class="token function">foo_three</span><span class="token punctuation">(</span>x<span class="token punctuation">:</span> <span class="token operator">&amp;</span><span class="token keyword">mut</span> f64<span class="token punctuation">,</span> swap<span class="token punctuation">:</span> <span class="token keyword">fn</span><span class="token punctuation">(</span>i32<span class="token punctuation">,</span> i32<span class="token punctuation">)</span> <span class="token punctuation">-&gt;</span> <span class="token punctuation">(</span>i32<span class="token punctuation">,</span> i32<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token operator">*</span>x <span class="token operator">=</span> <span class="token number">65.5</span><span class="token punctuation">;</span>
+    
+    <span class="token keyword">let</span> lhs <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">let</span> rhs <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+    <span class="token function">println!</span><span class="token punctuation">(</span><span class="token string">"lhs is {}, lhs is {}"</span><span class="token punctuation">,</span> lhs<span class="token punctuation">,</span> rhs<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+    <span class="token keyword">let</span> <span class="token punctuation">(</span>lhs<span class="token punctuation">,</span> rhs<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token function">swap</span><span class="token punctuation">(</span>lhs<span class="token punctuation">,</span> rhs<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">println!</span><span class="token punctuation">(</span><span class="token string">"lhs is {}, lhs is {}"</span><span class="token punctuation">,</span> lhs<span class="token punctuation">,</span> rhs<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">fn</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">foo</span><span class="token punctuation">(</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+    <span class="token keyword">let</span> <span class="token punctuation">(</span>a<span class="token punctuation">,</span> b<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token function">foo_two</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">println!</span><span class="token punctuation">(</span><span class="token string">"foo_two was called: {} {}"</span><span class="token punctuation">,</span> a<span class="token punctuation">,</span> b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+    <span class="token keyword">let</span> <span class="token keyword">mut</span> float_num <span class="token operator">=</span> <span class="token number">16.0</span><span class="token punctuation">;</span>
+    <span class="token function">println!</span><span class="token punctuation">(</span><span class="token string">"before foo_three: {}"</span><span class="token punctuation">,</span> float_num<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// в качестве второго аргумента передается анонимная функция</span>
+    <span class="token function">foo_three</span><span class="token punctuation">(</span><span class="token operator">&amp;</span><span class="token keyword">mut</span> float_num<span class="token punctuation">,</span> <span class="token closure-params"><span class="token punctuation">|</span>l<span class="token punctuation">:</span> i32<span class="token punctuation">,</span> r<span class="token punctuation">:</span> i32<span class="token punctuation">|</span></span> <span class="token punctuation">-&gt;</span> <span class="token punctuation">(</span>i32<span class="token punctuation">,</span> i32<span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">(</span>r<span class="token punctuation">,</span> l<span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">println!</span><span class="token punctuation">(</span><span class="token string">"after foo_three: {}"</span><span class="token punctuation">,</span> float_num<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</li>
+<li>
+<p>В Rust также есть поддержка <a href="https://doc.rust-lang.org/book/ch19-06-macros.html?highlight=macros#macros">макросов</a> и система <a href="https://doc.rust-lang.org/book/ch10-02-traits.html"><strong>трейтов</strong></a> (типажей). Traits реализуют механизм обеспечения функциональности у типов, что в каком-то смысле делает их похожими на интерфейсы (абстрактные классов и т.п.) в других языках, но <a href="https://doc.rust-lang.org/book/ch19-03-advanced-traits.html">не ограничивается</a> этим (наиболее близкий аналог - концепты из C++20).</p>
+</li>
+</ul>
+<p>Rust можно использовать с различными редакторами кода и IDE (ограниченно). Для VS Code есть <a href="https://marketplace.visualstudio.com/items?itemName=matklad.rust-analyzer">расширение</a>, обеспечивающее поддержку этого языка. Также есть отдельный <a href="https://plugins.jetbrains.com/plugin/8182-rust">плагин</a> для CLion.</p>
+<h2 id="настройка-окружения">Настройка окружения</h2>
+<p>Для выполнения лабораторной работы необходимо установить соответствующий тулчейн, необходимый для работы с фреймворком Substrate.</p>
+<blockquote>
+<p>В общем и целом предполагается использование POSIX-совместимого окружения. Работа гарантируется только для Ubuntu 21.04+ + Chrome v100+.</p>
+</blockquote>
+<h3 id="docker">Docker</h3>
+<p>Можно использовать готовый образ, содержащий скомпилированные шаблоны. Весит довольно много.</p>
+<p>Для простоты достаточно использовать Docker Desktop (<a href="https://docs.docker.com/desktop/windows/install/">Windows</a>, <a href="https://docs.docker.com/desktop/linux/">Linux</a>, <a href="https://docs.docker.com/desktop/mac/install/">MacOS</a>).</p>
+<p>Сами шаблоны внутри контейнера находятся в <code>/opt/app</code> в отдельных директориях (как если бы туда клонировали репозитории вручную). Наружу открыты порты 30330-30340 (для взаимодействия узлов сети между собой по p2p), 9944-9954 (ws порты), 9933-9943 (для RPC), 8000 (для фронтенд сервера). При желании можно открыть еще порты (например, для телеметрии) при запуске контейнера.</p>
+<p>Отдельные узлы и фронтенд сервер предполагается запускать в разных контейнерах.</p>
+<p>При запуске контейнера следует вручную указать volume, с указанием из какой директории (на текущей машине) в какую (в контейнере) будет отображаться файл с кодом (в образе нет заранее заданного volume). При первом запуске нужно скопировать (к сожалению) все из <code>/opt/app</code> в нужный volume. Сделать это можно следующей командой (займет какое-то время):</p>
+<pre class=" language-bash"><code class="prism  language-bash"><span class="token function">cp</span> -a /opt/app/. /название-директории-в-контейнере/ 2<span class="token operator">&gt;</span> /dev/null
+</code></pre>
+<p>Это позволит сохранить прогресс в файловой системе и синхронизировать состояние между разными контейнерами (при условии, что для всех контейнеров всегда будут отображаться одна и та же директория в один и тот же volume).</p>
+<p>Сам контейнер можно запустить так:</p>
+<pre class=" language-bash"><code class="prism  language-bash">docker run \
+-p 30333:30333 -p 9945:9945 -p 9933:9933 -p 8000:8000 \
+-it -v полный-путь-к-директории-в-системе:полный-путь-к-директории-в-контейнере \
+arugaf/blockchain-lab <span class="token function">bash</span>
+</code></pre>
+<p>Где на первой строчке через флаг <code>-p</code> указываются порты в системе:порты в контейнере (выбирать их нужно в зависимости от конфигурации узла, который будет запускаться в контейнере). Контейнер будет работать в интерактивном режиме, при этом можно будет изменять файлы, хранящиеся в указанной директории.</p>
+<blockquote>
+<p>При запуске контейнера в Windows может понадобиться добавить <code>--privileged --security-opt="seccomp=unconfined"</code> в параметры запуска.</p>
+</blockquote>
+<h3 id="substrate">Substrate</h3>
+<p>Для выполнения лабораторной работы с использованием фреймворка Substrate необходимо установить Rust toolchain для работы с языком <a href="https://www.rust-lang.org/">Rust</a> и скачать два репозитория с бойлерплейт-кодом: один для непосредственно блокчейн узла и второй для фронтенда (написанный с использованием React), через который можно будет напрямую взаимодействовать с блокчейном.</p>
+<h4 id="linux">Linux</h4>
+<p>Debian/Ubuntu.</p>
+<h5 id="git-clang-llvm-curl-node-yarn-необходимые-библиотеки">Git, Clang, LLVM, curl, Node, Yarn, необходимые библиотеки</h5>
+<ol>
+<li>
+<p>Установить git, clang, curl, llvm, библиотеки ssl, udev.</p>
+<pre class=" language-bash"><code class="prism  language-bash"><span class="token function">sudo</span> apt update <span class="token operator">&amp;&amp;</span> <span class="token function">sudo</span> apt <span class="token function">install</span> -y <span class="token function">git</span> clang curl libssl-dev llvm libudev-dev
+</code></pre>
+</li>
+<li>
+<p>Проверить текущую версию Node.</p>
+<pre class=" language-bash"><code class="prism  language-bash">node --version
+</code></pre>
+</li>
+<li>
+<p>Если Node не установлен или ниже <strong>14 версии</strong>, то нужно установить его (подробности на <a href="https://nodejs.org/en/">официальном сайте</a>) или обновить до последней версии (через nvm или npm).</p>
+</li>
+<li>
+<p>Проверить установлен ли менеджер пакетов Yarn.</p>
+<pre class=" language-bash"><code class="prism  language-bash">yarn --version
+</code></pre>
+</li>
+<li>
+<p>Если Yarn не установлен, то скачать и установить.</p>
+<pre class=" language-bash"><code class="prism  language-bash"><span class="token function">npm</span> <span class="token function">install</span> -g yarn
+</code></pre>
+</li>
+</ol>
+<h5 id="rust-и-rust-toolchain">Rust и Rust toolchain</h5>
+<ol>
+<li>
+<p>Скачать и запустить <a href="https://rustup.rs/">rustup</a> - установщик Rust.</p>
+<pre class=" language-bash"><code class="prism  language-bash">curl https://sh.rustup.rs -sSf <span class="token operator">|</span>  sh
+</code></pre>
+</li>
+<li>
+<p>Добавить директорию с бинарниками Rust в PATH.</p>
+<pre class=" language-bash"><code class="prism  language-bash"><span class="token function">source</span> ~/.cargo/env
+</code></pre>
+</li>
+<li>
+<p>Указать stable сборку основной версией Rust toolchain.</p>
+<pre class=" language-bash"><code class="prism  language-bash">rustup default stable
+rustup update
+</code></pre>
+</li>
+<li>
+<p>Добавить nightly сборку Rust toolchain и WebAssembly в качестве цели (платформы) для компиляции.</p>
+<pre class=" language-bash"><code class="prism  language-bash">rustup update nightly
+rustup target add wasm32-unknown-unknown --toolchain nightly
+</code></pre>
+</li>
+<li>
+<p>Убедиться, что установка прошла успешно (должна быть актуальная версия компилятора и тулчейна).</p>
+<pre class=" language-bash"><code class="prism  language-bash">rustc --version
+rustup show
+</code></pre>
+</li>
+</ol>
+<h5 id="шаблон-для-substrate-узла">Шаблон для Substrate узла</h5>
+<ol>
+<li>
+<p>Склонировать <a href="https://github.com/substrate-developer-hub/substrate-node-template">репозиторий</a> с шаблоном Substrate узла.</p>
+<pre class=" language-bash"><code class="prism  language-bash"><span class="token function">git</span> clone https://github.com/substrate-developer-hub/substrate-node-template
+</code></pre>
+</li>
+<li>
+<p>Перейти в директорию с шаблоном и переключиться на ветку latest.</p>
+<pre class=" language-bash"><code class="prism  language-bash"><span class="token function">cd</span> substrate-node-template
+<span class="token function">git</span> checkout latest
+</code></pre>
+</li>
+<li>
+<p>Скомпилировать шаблон узла (может занять много времени).</p>
+<pre class=" language-bash"><code class="prism  language-bash">cargo build --release
+</code></pre>
+</li>
+</ol>
+<h5 id="шаблон-для-фронтенда">Шаблон для фронтенда</h5>
+<ol>
+<li>
+<p>Склонировать <a href="https://github.com/substrate-developer-hub/substrate-front-end-template">репозиторий</a> с шаблоном Substrate фронтенда.</p>
+<pre class=" language-bash"><code class="prism  language-bash"><span class="token function">git</span> clone https://github.com/substrate-developer-hub/substrate-front-end-template
+</code></pre>
+</li>
+<li>
+<p>Перейти в директорию с шаблоном и переключиться на ветку latest.</p>
+<pre class=" language-bash"><code class="prism  language-bash"><span class="token function">cd</span> substrate-front-end-template
+<span class="token function">git</span> checkout latest
+</code></pre>
+</li>
+<li>
+<p>Скачать и установить зависимости.</p>
+<pre class=" language-bash"><code class="prism  language-bash">yarn <span class="token function">install</span>
+</code></pre>
+</li>
+</ol>
+<h5 id="настройка-браузера">Настройка браузера</h5>
+<p>Для работы с децентрализованными приложениями с использованием собственных аккаунтов понадобится использовать <strong>криптокошелек</strong> (<a href="https://polkadot.js.org/">Polkadot{.js}</a>, <a href="https://metamask.io/">MetaMask</a> и др.).</p>
+<p>Так как в качестве фреймворка для разработки используется Substrate, то лучше всего установить кошелек Polkadot. <a href="https://chrome.google.com/webstore/detail/polkadot%7Bjs%7D-extension/mopnmbcafieddcagagdcbnhejhlodfdd">Chrome</a>, <a href="https://addons.mozilla.org/en-US/firefox/addon/polkadot-js-extension/">Firefox 🦊</a>.</p>
+<h4 id="windows">Windows</h4>
+<p><a href="https://docs.substrate.io/v3/getting-started/windows-users/">https://docs.substrate.io/v3/getting-started/windows-users/</a></p>
+<h2 id="создание-простого-децентрализованного-приложения">Создание простого децентрализованного приложения</h2>
+<p>Для начала научимся создавать простое децентрализованное приложение. Его функционал будет заключаться в том, чтобы любой пользователь (подписанный <a href="https://ru.wikipedia.org/wiki/%D0%AD%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%BD%D0%B0%D1%8F_%D0%BF%D0%BE%D0%B4%D0%BF%D0%B8%D1%81%D1%8C">электронной цифровой подписью</a>) мог положить некое сообщение на блокчейн, а все остальные (не обязательно подписанные ЭЦП) могли прочитать его по требованию. При этом пользователь, отправивший сообщение последний, не сможет заменить его новым, пока кто-то другой не отправит свое сообщение.</p>
+<p>Последовательность действий описана для Linux, в других ОС могут незначительно меняться команды.</p>
+<ol>
+<li>
+<p>Начнем создавать собственный паллет (модуль) на основе имеющегося шаблона. В первую очередь, уберем лишние (на текущий момент) файлы: находясь в директории с шаблоном Substrate узла,	 нужно перейти в директорию с паллетами и удалить файлы <code>benchmarking.rs</code>, <code>mock.rs</code>, <code>tests.rs</code>.</p>
+<pre class=" language-bash"><code class="prism  language-bash"><span class="token function">cd</span> pallets/template/src
+</code></pre>
+<pre class=" language-bash"><code class="prism  language-bash">$ <span class="token function">pwd</span>
+	<span class="token comment"># должно быть ${SOME_DIR}/substrate-node-template/pallets/template/src</span>
+	<span class="token comment"># где SOME_DIR - директория, в которой хранится репозиторий</span>
+</code></pre>
+<pre class=" language-bash"><code class="prism  language-bash">$ tree
+<span class="token keyword">.</span>			<span class="token keyword">.</span>
+└── lib.rs
+
+0 directories, 1 <span class="token function">file</span>
+</code></pre>
+</li>
+<li>
+<p>Удалим содержимое файла <code>pallets/template/src/lib.rs</code> и заменим следующим кодом:</p>
+<pre class=" language-rust"><code class="prism  language-rust"><span class="token attribute attr-name">#![cfg_attr(not(feature = "std"), no_std)]</span>
+
+<span class="token keyword">pub</span> <span class="token keyword">use</span> pallet<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token operator">*</span><span class="token punctuation">;</span>
+
+<span class="token attribute attr-name">#[frame_support::pallet]</span>
+<span class="token keyword">pub</span> <span class="token keyword">mod</span> pallet <span class="token punctuation">{</span>
+    <span class="token keyword">use</span> frame_support<span class="token punctuation">:</span><span class="token punctuation">:</span>pallet_prelude<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token operator">*</span><span class="token punctuation">;</span>
+    <span class="token keyword">use</span> frame_system<span class="token punctuation">:</span><span class="token punctuation">:</span>pallet_prelude<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token operator">*</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// Основная структура, в которой будет содержаться логика</span>
+    <span class="token attribute attr-name">#[pallet::pallet]</span>
+    <span class="token attribute attr-name">#[pallet::generate_store(pub (super) trait Store)]</span>
+    <span class="token keyword">pub</span> <span class="token keyword">struct</span> Pallet<span class="token operator">&lt;</span>T<span class="token operator">&gt;</span><span class="token punctuation">(</span>_<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">/* Тут можно описывать кастомные типы, константы и прочее. */</span>
+
+    <span class="token comment">// Todo: 3. Описать конфигурацию</span>
+    <span class="token attribute attr-name">#[pallet::config]</span>
+    <span class="token keyword">pub</span> <span class="token keyword">trait</span> Config<span class="token punctuation">:</span> frame_system<span class="token punctuation">:</span><span class="token punctuation">:</span>Config <span class="token punctuation">{</span>
+        <span class="token keyword">type</span> Event<span class="token punctuation">:</span> From<span class="token operator">&lt;</span>Event<span class="token operator">&lt;</span>Self<span class="token operator">&gt;&gt;</span> <span class="token operator">+</span> IsType<span class="token operator">&lt;&lt;</span>Self <span class="token keyword">as</span> frame_system<span class="token punctuation">:</span><span class="token punctuation">:</span>Config<span class="token operator">&gt;</span><span class="token punctuation">:</span><span class="token punctuation">:</span>Event<span class="token operator">&gt;</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// Todo: 4. Описать генерируемые события</span>
+    <span class="token attribute attr-name">#[pallet::event]</span>
+    <span class="token attribute attr-name">#[pallet::generate_deposit(pub (super) fn deposit_event)]</span>
+    <span class="token keyword">pub</span> <span class="token keyword">enum</span> Event<span class="token operator">&lt;</span>T<span class="token punctuation">:</span> Config<span class="token operator">&gt;</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+    <span class="token comment">// Todo: 5. Описать возможные ошибки</span>
+    <span class="token attribute attr-name">#[pallet::error]</span>
+    <span class="token keyword">pub</span> <span class="token keyword">enum</span> Error<span class="token operator">&lt;</span>T<span class="token operator">&gt;</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+    <span class="token comment">// Todo: 6. Создать Storage для хранения сообщения</span>
+
+    <span class="token comment">// Todo: 7. Создать вызываемые функции для взаимодействия с блокчейном</span>
+    <span class="token attribute attr-name">#[pallet::call]</span>
+    <span class="token keyword">impl</span><span class="token operator">&lt;</span>T<span class="token punctuation">:</span> Config<span class="token operator">&gt;</span> Pallet<span class="token operator">&lt;</span>T<span class="token operator">&gt;</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</li>
+<li>
+<p>Опишем конфигурацию. В конфиге содержатся различные дженерики, которые можно настраивать для рантайма. <code>#[pallet::config]</code> - <a href="https://docs.substrate.io/rustdocs/latest/frame_support/attr.pallet.html#config-trait-palletconfig-mandatory">макрос</a>, используемый при указании конфигурации, <code>#[pallet::constant]</code> - <a href="https://docs.substrate.io/rustdocs/latest/frame_support/attr.pallet.html#config-trait-palletconfig-mandatory">макрос</a>, используемый для того, чтобы сторонние приложения (или пользователь) могли получить прямой доступ к чтению константы.</p>
+<pre class=" language-rust"><code class="prism  language-rust"><span class="token attribute attr-name">#[pallet::config]</span>
+<span class="token keyword">pub</span> <span class="token keyword">trait</span> Config<span class="token punctuation">:</span> frame_system<span class="token punctuation">:</span><span class="token punctuation">:</span>Config <span class="token punctuation">{</span>
+    <span class="token comment">/// Определяем тип событий.</span>
+    <span class="token keyword">type</span> Event<span class="token punctuation">:</span> From<span class="token operator">&lt;</span>Event<span class="token operator">&lt;</span>Self<span class="token operator">&gt;&gt;</span> <span class="token operator">+</span> IsType<span class="token operator">&lt;&lt;</span>Self <span class="token keyword">as</span> frame_system<span class="token punctuation">:</span><span class="token punctuation">:</span>Config<span class="token operator">&gt;</span><span class="token punctuation">:</span><span class="token punctuation">:</span>Event<span class="token operator">&gt;</span><span class="token punctuation">;</span>
+    <span class="token comment">/// Определяем максимальный размер строки сообщения (указывать будем в рантайме).</span>
+    <span class="token comment">// u32 - тип размера, Get - трейт, которому должен удовлетворять тип, передаваемый через рантайм (для данного трейта - наличие функции get)</span>
+    <span class="token attribute attr-name">#[pallet::constant]</span>
+    <span class="token keyword">type</span> MaxMessageLength<span class="token punctuation">:</span> Get<span class="token operator">&lt;</span>u32<span class="token operator">&gt;</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</li>
+<li>
+<p>Опишем набор событий, которые может генерировать наш паллет. В данном случае у нас всего одно событие: создание нового сообщения. <code>#[pallet::event]</code> - <a href="https://docs.substrate.io/rustdocs/latest/frame_support/attr.pallet.html#macro-expansion-1">документация</a>.</p>
+<pre class=" language-rust"><code class="prism  language-rust"><span class="token attribute attr-name">#[pallet::event]</span>
+<span class="token attribute attr-name">#[pallet::generate_deposit(pub (super) fn deposit_event)]</span>
+<span class="token keyword">pub</span> <span class="token keyword">enum</span> Event<span class="token operator">&lt;</span>T<span class="token punctuation">:</span> Config<span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+    <span class="token comment">/// Событие будет сгенерировано после того, как кто-то создаст новое сообщение.</span>
+    <span class="token comment">// T::AccountID - уникальный идентификатор аккаунта, тип передается через рантайм</span>
+    <span class="token comment">// BoundedVec - тип, предоставляемый FRAME, вектор с указанием максимального размера</span>
+    <span class="token function">MessageCreated</span><span class="token punctuation">(</span>T<span class="token punctuation">:</span><span class="token punctuation">:</span>AccountId<span class="token punctuation">,</span> BoundedVec<span class="token operator">&lt;</span>u8<span class="token punctuation">,</span> T<span class="token punctuation">:</span><span class="token punctuation">:</span>MaxMessageLength<span class="token operator">&gt;</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</li>
+<li>
+<p>Также опишем набор ошибок, которые могут произойти во время выполнения функций паллета. Так как в задании мы описали ограничение, не дающее одному и тому же пользователю отправить два сообщения подряд, то укажем соответствующую ошибку. <code>#[pallet::error]</code> - <a href="https://docs.substrate.io/rustdocs/latest/frame_support/attr.pallet.html#error-palleterror-optional">документация</a>. Комментарии, написанные через <code>///</code> автоматически воспринимаются как документация, для ошибок этот комментарий будет отправлен в качестве описания.</p>
+<pre class=" language-rust"><code class="prism  language-rust"><span class="token attribute attr-name">#[pallet::error]</span>
+<span class="token keyword">pub</span> <span class="token keyword">enum</span> Error<span class="token operator">&lt;</span>T<span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+    <span class="token comment">/// Одному и тому же пользователю нельзя отправить сообщение дважды подряд.</span>
+    MessageFromSameUser<span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</li>
+<li>
+<p>Создадим Storage, в котором будет храниться наше сообщение. Используем <a href="https://docs.substrate.io/rustdocs/latest/frame_support/storage/trait.StorageValue.html"><strong>StorageValue</strong></a>, хранящий единственное значение. В качестве значения используем <a href="https://doc.rust-lang.org/rust-by-example/primitives/tuples.html">tuple</a>, хранящий <a href="https://doc.rust-lang.org/rust-by-example/std/option.html"><strong>Option</strong></a> с идентификатором пользователя (Option предоставляет собой <a href="https://doc.rust-lang.org/book/ch06-01-defining-an-enum.html">перечисление</a>, которое может быть None или Some(значение), делается это потому, что при запуске блокчейна в single value storage должно храниться значение, удовлетворяющее трейту <code>Default</code>. В данном случае можно либо воспользоваться Option, либо имплементировать соответствующий метод для дженерик типа AccountId (его мы получаем из рантайма), либо указать правило для <a href="https://docs.substrate.io/how-to-guides/v3/basics/genesis/">genesis</a> блока) и само сообщение. В качестве типа для вектора используем <code>u8</code>, что позволит использовать en ascii символы в сообщении (для поддержки utf-8 можно использовать <code>sp_std::vec::Vec&lt;u8&gt;</code> - <a href="https://docs.rs/sp-std/2.0.0-alpha.7/sp_std/vec/struct.Vec.html">низкоуровневый вектор</a>, который воспринимается как строка в Substrate, но в таком случае придется вручную контролировать его длину).</p>
+<pre class=" language-rust"><code class="prism  language-rust"><span class="token attribute attr-name">#[pallet::storage]</span>
+<span class="token comment">/// Хранит tuple из идентификатора пользователя и его сообщения.</span>
+<span class="token keyword">pub</span><span class="token punctuation">(</span><span class="token keyword">super</span><span class="token punctuation">)</span> <span class="token keyword">type</span> Message<span class="token operator">&lt;</span>T<span class="token punctuation">:</span> Config<span class="token operator">&gt;</span> <span class="token operator">=</span> StorageValue<span class="token operator">&lt;</span>
+    _<span class="token punctuation">,</span>
+    <span class="token punctuation">(</span>Option<span class="token operator">&lt;</span>T<span class="token punctuation">:</span><span class="token punctuation">:</span>AccountId<span class="token operator">&gt;</span><span class="token punctuation">,</span> BoundedVec<span class="token operator">&lt;</span>u8<span class="token punctuation">,</span> T<span class="token punctuation">:</span><span class="token punctuation">:</span>MaxMessageLength<span class="token operator">&gt;</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    ValueQuery<span class="token punctuation">,</span>
+<span class="token operator">&gt;</span><span class="token punctuation">;</span>
+
+</code></pre>
+</li>
+<li>
+<p>Создадим функцию, которая будет складывать наше сообщение на блокчейн. Про оператор <code>?</code> можно почитать <a href="https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html#a-shortcut-for-propagating-errors-the--operator">здесь</a>. Про ключевое слово <code>match</code> (частично по функционалу похожее на switch case в других языках) можно почитать <a href="https://doc.rust-lang.org/book/ch06-02-match.html">тут</a>. <strong>Вес</strong> (weight) отражает вычислительную сложность функции и, помимо всего прочего, используется при расчете стоимости транзакции (<a href="https://docs.substrate.io/v3/concepts/weight/">подробнее</a>.</p>
+<pre class=" language-rust"><code class="prism  language-rust"><span class="token attribute attr-name">#[pallet::call]</span>
+<span class="token keyword">impl</span><span class="token operator">&lt;</span>T<span class="token punctuation">:</span> Config<span class="token operator">&gt;</span> Pallet<span class="token operator">&lt;</span>T<span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+    <span class="token attribute attr-name">#[pallet::weight(1_000)]</span>
+    <span class="token keyword">pub</span> <span class="token keyword">fn</span> <span class="token function">create_message</span><span class="token punctuation">(</span>
+        origin<span class="token punctuation">:</span> OriginFor<span class="token operator">&lt;</span>T<span class="token operator">&gt;</span><span class="token punctuation">,</span>
+        message<span class="token punctuation">:</span> BoundedVec<span class="token operator">&lt;</span>u8<span class="token punctuation">,</span> T<span class="token punctuation">:</span><span class="token punctuation">:</span>MaxMessageLength<span class="token operator">&gt;</span><span class="token punctuation">,</span>
+    <span class="token punctuation">)</span> <span class="token punctuation">-&gt;</span> DispatchResult <span class="token punctuation">{</span>
+        <span class="token comment">// Проверяет подпись и возвращает идентификатор пользователя</span>
+        <span class="token comment">// Вернет ошибку, если транзакция не подписана</span>
+        <span class="token comment">// https://docs.substrate.io/v3/runtime/origins</span>
+        <span class="token keyword">let</span> sender <span class="token operator">=</span> <span class="token function">ensure_signed</span><span class="token punctuation">(</span>origin<span class="token punctuation">)</span>?<span class="token punctuation">;</span>
+
+        <span class="token comment">// Смотрим кто отправил сообщение</span>
+        <span class="token keyword">let</span> <span class="token punctuation">(</span>user<span class="token punctuation">,</span> _<span class="token punctuation">)</span> <span class="token operator">=</span> Message<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token operator">&lt;</span>T<span class="token operator">&gt;</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">match</span> user <span class="token punctuation">{</span>
+            <span class="token comment">// Если id совпадают, то выбрасываем ошибку</span>
+            <span class="token function">Some</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token function">ensure!</span><span class="token punctuation">(</span>sender <span class="token operator">!=</span> user<span class="token punctuation">,</span> Error<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token operator">&lt;</span>T<span class="token operator">&gt;</span><span class="token punctuation">:</span><span class="token punctuation">:</span>MessageFromSameUser<span class="token punctuation">)</span><span class="token punctuation">,</span>
+            _ <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token comment">// Сохраняем новое сообщение и пользователя (оборачивается в Some, т.к. используем Option)</span>
+        Message<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token operator">&lt;</span>T<span class="token operator">&gt;</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token function">Some</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>sender<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>message<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// Отправляем событие</span>
+        Self<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token function">deposit_event</span><span class="token punctuation">(</span>Event<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token function">MessageCreated</span><span class="token punctuation">(</span>sender<span class="token punctuation">,</span> message<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// Expression - возвращаем положительный результат</span>
+        <span class="token function">Ok</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</li>
+<li>
+<p>Наконец, настроим максимальную длину строки через рантайм. Для этого укажем его в конфиге паллета в рантайме. В файле <code>substrate-node-template/runtime/src/lib.rs</code> найдем следующий кусок кода:</p>
+<pre class=" language-rust"><code class="prism  language-rust"><span class="token comment">/// Configure the pallet-template in pallets/template.</span>
+<span class="token keyword">impl</span> pallet_template<span class="token punctuation">:</span><span class="token punctuation">:</span>Config <span class="token keyword">for</span> Runtime <span class="token punctuation">{</span>
+    <span class="token keyword">type</span> Event <span class="token operator">=</span> Event<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>И изменим его:</p>
+<pre class=" language-rust"><code class="prism  language-rust"><span class="token comment">/// Configure the pallet-template in pallets/template.</span>
+<span class="token keyword">impl</span> pallet_template<span class="token punctuation">:</span><span class="token punctuation">:</span>Config <span class="token keyword">for</span> Runtime <span class="token punctuation">{</span>
+    <span class="token keyword">type</span> Event <span class="token operator">=</span> Event<span class="token punctuation">;</span>
+    <span class="token comment">// Устанавливаем максимальный размер строки - 128</span>
+	<span class="token keyword">type</span> MaxMessageLength <span class="token operator">=</span> frame_support<span class="token punctuation">:</span><span class="token punctuation">:</span>traits<span class="token punctuation">:</span><span class="token punctuation">:</span>ConstU32<span class="token operator">&lt;</span><span class="token number">128</span><span class="token operator">&gt;</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</li>
+<li>
+<p>Проверим <strong>может</strong> ли скомпилироваться код.</p>
+<pre class=" language-bash"><code class="prism  language-bash">cargo check -p node-template-runtime
+</code></pre>
+</li>
+<li>
+<p>Затем скомпилируем узел.</p>
+<pre class=" language-bash"><code class="prism  language-bash">cargo build --release
+</code></pre>
+</li>
+<li>
+<p>Запустим узел в режиме разработчика (состояние блокчейна не будет сохранено).</p>
+<pre class=" language-bash"><code class="prism  language-bash">./target/release/node-template --dev
+</code></pre>
+</li>
+<li>
+<p>Изначальный шаблон уже содержит набор различных паллетов, отвечающих за currency, управление балансом, <a href="https://docs.substrate.io/v3/advanced/consensus/">консенсусом</a> (Aura + GRANDPA) и прочее. Паллеты можно отключать и подключать новые, настраивать, конфигурировать в зависимости от целей. После запуска узел должен сразу начать генерировать и валидировать новые блоки.</p>
+</li>
+<li>
+<p>В качестве фронтенда для получившегося DApp можно использовать нативный <a href="https://polkadot.js.org/apps">онлайн-фронтенд</a>. При подключении к нему нужно выбрать запущенный локально узел и переключиться на него. Дальнейшее управление идет непосредственно в приложении (вызов функций, запросов, проверка состояния, исследование блоков и т.п.). Также можно написать собственный фронтенд. <a href="https://polkadot.network/">Polkadot</a> (блокчейн-платформа, тесно интегрированная и использующая фреймворк Substrate), предоставляет собственное API с поддержкой удаленных вызовов функций в децентрализованном приложении. Используя скачанный ранее шаблон, можно написать кастомный фронтенд с использованием React.<br>
+Для этого надо перейти в директорию с шаблоном фронтенда и заменить содержимое файла <code>src/substrate-lib/TemplateModule.js</code> следующим кодом:</p>
+<pre class=" language-js"><code class="prism  language-js"><span class="token keyword">import</span> React<span class="token punctuation">,</span> <span class="token punctuation">{</span>useEffect<span class="token punctuation">,</span> useState<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'react'</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span>Form<span class="token punctuation">,</span> Input<span class="token punctuation">,</span> Grid<span class="token punctuation">,</span> Message<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'semantic-ui-react'</span>
+
+<span class="token comment">// Pre-built Substrate front-end utilities for connecting to a node</span>
+<span class="token comment">// and making a transaction.</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span>useSubstrateState<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'./substrate-lib'</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span>TxButton<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'./substrate-lib/components'</span>
+
+<span class="token comment">// Main component</span>
+<span class="token keyword">function</span> <span class="token function">Main</span><span class="token punctuation">(</span>props<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// Establish an API to talk to the Substrate node.</span>
+    <span class="token keyword">const</span> <span class="token punctuation">{</span>api<span class="token punctuation">,</span> currentAccount<span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">useSubstrateState</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token comment">// React hooks for all the state variables we track.</span>
+    <span class="token comment">// Learn more at: https://reactjs.org/docs/hooks-intro.html</span>
+    <span class="token keyword">const</span> <span class="token punctuation">[</span>status<span class="token punctuation">,</span> setStatus<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">useState</span><span class="token punctuation">(</span><span class="token string">''</span><span class="token punctuation">)</span>
+    <span class="token keyword">const</span> <span class="token punctuation">[</span>message<span class="token punctuation">,</span> setMessage<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">useState</span><span class="token punctuation">(</span><span class="token string">''</span><span class="token punctuation">)</span>
+    <span class="token keyword">const</span> <span class="token punctuation">[</span>owner<span class="token punctuation">,</span> setOwner<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">useState</span><span class="token punctuation">(</span><span class="token string">''</span><span class="token punctuation">)</span>
+    <span class="token keyword">const</span> <span class="token punctuation">[</span>currentMessage<span class="token punctuation">,</span> setCurrentMessage<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">useState</span><span class="token punctuation">(</span><span class="token string">''</span><span class="token punctuation">)</span>
+
+    <span class="token comment">// React hook, который смотрит на сообщение</span>
+    <span class="token function">useEffect</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token keyword">let</span> unsubscribe<span class="token punctuation">;</span>
+        <span class="token comment">// Polkadot-JS API query to the `proofs` storage item in our pallet.</span>
+        <span class="token comment">// This is a subscription, so it will always get the latest value,</span>
+        <span class="token comment">// even if it changes.</span>
+
+        <span class="token comment">// Делаем запрос к Storage нашего паллета</span>
+        <span class="token comment">// Т.к. мы подписались на событие, то всегда будем получать самое актуальное значение</span>
+        api<span class="token punctuation">.</span>query<span class="token punctuation">.</span>templateModule
+            <span class="token punctuation">.</span><span class="token function">message</span><span class="token punctuation">(</span>result <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>result<span class="token punctuation">.</span><span class="token function">inspect</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>inner<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    <span class="token keyword">let</span> <span class="token punctuation">[</span>tmpAddress<span class="token punctuation">,</span> tmpBlock<span class="token punctuation">]</span> <span class="token operator">=</span> result<span class="token punctuation">.</span><span class="token function">toHuman</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                    <span class="token function">setOwner</span><span class="token punctuation">(</span>tmpAddress<span class="token punctuation">)</span>
+                    <span class="token function">setCurrentMessage</span><span class="token punctuation">(</span>tmpBlock<span class="token punctuation">)</span>
+                <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                    <span class="token function">setOwner</span><span class="token punctuation">(</span><span class="token string">''</span><span class="token punctuation">)</span>
+                    <span class="token function">setCurrentMessage</span><span class="token punctuation">(</span><span class="token string">''</span><span class="token punctuation">)</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span>unsub <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+                unsubscribe <span class="token operator">=</span> unsub<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> unsubscribe <span class="token operator">&amp;&amp;</span> <span class="token function">unsubscribe</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// Хук обновляется, если появляется новое сообщение в Storage</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">[</span>api<span class="token punctuation">.</span>query<span class="token punctuation">.</span>templateModule<span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">function</span> <span class="token function">canSendMessage</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> owner <span class="token operator">!==</span> <span class="token string">''</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// The actual UI elements which are returned from our component.</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>
+        <span class="token operator">&lt;</span>Grid<span class="token punctuation">.</span>Column<span class="token operator">&gt;</span>
+            <span class="token operator">&lt;</span>h1<span class="token operator">&gt;</span>Отправить сообщение<span class="token operator">&lt;</span><span class="token operator">/</span>h1<span class="token operator">&gt;</span>
+            <span class="token punctuation">{</span><span class="token comment">/* Не дает отправить сообщение, если оно уже было отправлено этим пользователем. */</span><span class="token punctuation">}</span>
+            <span class="token operator">&lt;</span>Form success<span class="token operator">=</span><span class="token punctuation">{</span><span class="token operator">!</span><span class="token operator">!</span>message <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span>currentAccount <span class="token operator">?</span> owner <span class="token operator">!==</span> currentAccount<span class="token punctuation">.</span>address <span class="token punctuation">:</span> <span class="token function">canSendMessage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">}</span>
+                  warning<span class="token operator">=</span><span class="token punctuation">{</span><span class="token punctuation">(</span>currentAccount <span class="token operator">?</span> owner <span class="token operator">===</span> currentAccount<span class="token punctuation">.</span>address <span class="token punctuation">:</span> <span class="token operator">!</span><span class="token function">canSendMessage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token operator">&gt;</span>
+                <span class="token operator">&lt;</span>Form<span class="token punctuation">.</span>Field<span class="token operator">&gt;</span>
+                    <span class="token punctuation">{</span><span class="token comment">/* Текущее сообщение. */</span><span class="token punctuation">}</span>
+                    <span class="token operator">&lt;</span>Message
+                        header<span class="token operator">=</span><span class="token string">"Текущее сообщение"</span>
+                        list<span class="token operator">=</span><span class="token punctuation">{</span><span class="token punctuation">[</span><span class="token template-string"><span class="token string">`Отправитель: </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>owner <span class="token operator">?</span> owner <span class="token punctuation">:</span> <span class="token string">"Нет сообщений"</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">`</span></span><span class="token punctuation">,</span> <span class="token template-string"><span class="token string">`Сообщение: </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>currentMessage<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">`</span></span><span class="token punctuation">]</span><span class="token punctuation">}</span>
+                    <span class="token operator">/</span><span class="token operator">&gt;</span>
+                    <span class="token punctuation">{</span><span class="token comment">/* Полее для ввода сообщения. */</span><span class="token punctuation">}</span>
+                    <span class="token operator">&lt;</span>Input
+                        type<span class="token operator">=</span><span class="token string">"text"</span>
+                        id<span class="token operator">=</span><span class="token string">"msg"</span>
+                        label<span class="token operator">=</span><span class="token string">"Сообщение"</span>
+                        onChange<span class="token operator">=</span><span class="token punctuation">{</span>e <span class="token operator">=&gt;</span> <span class="token function">setMessage</span><span class="token punctuation">(</span>e<span class="token punctuation">.</span>target<span class="token punctuation">.</span>value<span class="token punctuation">)</span><span class="token punctuation">}</span>
+                    <span class="token operator">/</span><span class="token operator">&gt;</span>
+                    <span class="token punctuation">{</span><span class="token comment">/* Если можно отправить. */</span><span class="token punctuation">}</span>
+                    <span class="token operator">&lt;</span>Message success header<span class="token operator">=</span><span class="token string">"Можно отправить сообщение"</span> content<span class="token operator">=</span><span class="token punctuation">{</span>message<span class="token punctuation">}</span><span class="token operator">/</span><span class="token operator">&gt;</span>
+                    <span class="token punctuation">{</span><span class="token comment">/* Если нельзя. */</span><span class="token punctuation">}</span>
+                    <span class="token operator">&lt;</span>Message
+                        warning
+                        header<span class="token operator">=</span><span class="token string">"Сообщение уже было отправлено этим пользователем"</span>
+                        list<span class="token operator">=</span><span class="token punctuation">{</span><span class="token punctuation">[</span>message<span class="token punctuation">,</span> <span class="token template-string"><span class="token string">`Отправитель: </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>owner<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">`</span></span><span class="token punctuation">,</span> <span class="token template-string"><span class="token string">`Сообщение: </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>currentMessage<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">`</span></span><span class="token punctuation">]</span><span class="token punctuation">}</span>
+                    <span class="token operator">/</span><span class="token operator">&gt;</span>
+                <span class="token operator">&lt;</span><span class="token operator">/</span>Form<span class="token punctuation">.</span>Field<span class="token operator">&gt;</span>
+                <span class="token punctuation">{</span><span class="token comment">/* Кнопка отправки сообщения. */</span><span class="token punctuation">}</span>
+                <span class="token operator">&lt;</span>Form<span class="token punctuation">.</span>Field<span class="token operator">&gt;</span>
+                    <span class="token punctuation">{</span><span class="token comment">/* Непосредственно кнопка, неактивна если нельзя отправить сообщение. */</span><span class="token punctuation">}</span>
+                    <span class="token operator">&lt;</span>TxButton
+                        label<span class="token operator">=</span><span class="token string">"Отправить"</span>
+                        type<span class="token operator">=</span><span class="token string">"SIGNED-TX"</span>
+                        setStatus<span class="token operator">=</span><span class="token punctuation">{</span>setStatus<span class="token punctuation">}</span>
+                        disabled<span class="token operator">=</span><span class="token punctuation">{</span><span class="token operator">!</span><span class="token function">canSendMessage</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">||</span> owner <span class="token operator">===</span> currentAccount<span class="token punctuation">.</span>address<span class="token punctuation">}</span>
+                        attrs<span class="token operator">=</span><span class="token punctuation">{</span><span class="token punctuation">{</span>
+                            palletRpc<span class="token punctuation">:</span> <span class="token string">'templateModule'</span><span class="token punctuation">,</span>
+                            callable<span class="token punctuation">:</span> <span class="token string">'createMessage'</span><span class="token punctuation">,</span>
+                            inputParams<span class="token punctuation">:</span> <span class="token punctuation">[</span>message<span class="token punctuation">]</span><span class="token punctuation">,</span>
+                            paramFields<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token boolean">true</span><span class="token punctuation">]</span>
+                        <span class="token punctuation">}</span><span class="token punctuation">}</span>
+                    <span class="token operator">/</span><span class="token operator">&gt;</span>
+                <span class="token operator">&lt;</span><span class="token operator">/</span>Form<span class="token punctuation">.</span>Field<span class="token operator">&gt;</span>
+                <span class="token punctuation">{</span><span class="token comment">/* Статус сообщения. */</span><span class="token punctuation">}</span>
+                <span class="token operator">&lt;</span>div style<span class="token operator">=</span><span class="token punctuation">{</span><span class="token punctuation">{</span>overflowWrap<span class="token punctuation">:</span> <span class="token string">'break-word'</span><span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token operator">&gt;</span><span class="token punctuation">{</span>status<span class="token punctuation">}</span><span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
+            <span class="token operator">&lt;</span><span class="token operator">/</span>Form<span class="token operator">&gt;</span>
+        <span class="token operator">&lt;</span><span class="token operator">/</span>Grid<span class="token punctuation">.</span>Column<span class="token operator">&gt;</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token keyword">function</span> <span class="token function">TemplateModule</span><span class="token punctuation">(</span>props<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> <span class="token punctuation">{</span>api<span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">useSubstrateState</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> api<span class="token punctuation">.</span>query<span class="token punctuation">.</span>templateModule <span class="token operator">?</span> <span class="token operator">&lt;</span>Main <span class="token punctuation">{</span><span class="token operator">...</span>props<span class="token punctuation">}</span> <span class="token operator">/</span><span class="token operator">&gt;</span> <span class="token punctuation">:</span> <span class="token keyword">null</span>
+<span class="token punctuation">}</span>
+</code></pre>
+</li>
+<li>
+<p>Устанавливаем зависимости и запускаем фронтенд-сервер. Доступ можно получить через браузер (по умолчанию <a href="http://localhost:8000/substrate-front-end-template">http://localhost:8000/substrate-front-end-template</a>)</p>
+<pre class=" language-bash"><code class="prism  language-bash">yarn
+yarn start
+</code></pre>
+</li>
+<li>
+<p>Можно поэкспериментировать с отправкой сообщений, выбирая различные аккаунты (существует набор общеизвестных аккаунтов, наиболее известные из которых Алиса и Боб, с давних времен использующиеся в качестве экземплификанта в криптографии, и используемые в целях тестирования при  разработке).</p>
+</li>
+</ol>
+<h2 id="развертывание-собственной-блокчейн-сети">Развертывание собственной блокчейн сети</h2>
+<p>Будем использовать написанное выше приложение, чтобы развернуть его в локальной блокчейн сети, состоящей из двух узлов.</p>
+<p>Наше приложение использует <strong>Proof of Authority</strong> для достижения консенсуса. Эта модель полагается на множество предопределенных аккаунтов, которые занимаются валидацией блоков. <a href="https://docs.substrate.io/rustdocs/latest/sc_consensus_aura/index.html"><strong>Aura</strong></a> генерируют блоки по-очереди, равномерно распределяя нагрузку. <a href="https://docs.substrate.io/rustdocs/latest/sc_finality_grandpa/index.html"><strong>GRANDPA</strong></a> утверждают блоки путем “голосования” за “лучший” с их точки зрения блок. Для утверждения блока требуется не менее 2/3 голосов. Это значит, что сеть не будет нормально функционировать, пока не будет запущено как минимум 66% узлов, содержащих ключи аккаунтов GRANDPA. Для сети с двумя GRANDPA - это два минимум соответствующих узла.</p>
+<p>Перед запуском новой сети следует <strong>всегда</strong> очищать данные старого блокчейна. Делается это следующим образом (из директории с приложением):</p>
+<pre class=" language-bash"><code class="prism  language-bash">./target/release/node-template purge-chain --base-path путь-к-директории-с-данными-блокчейна --chain путь-к-спецификации-блокчейна/предопределенный-блокчейн
+</code></pre>
+<h3 id="генерация-ключей">Генерация ключей</h3>
+<p>Для запуска новой сети приватной сети (без предопределенных аккаунтов, таких как Alice и Bob) требуется сперва сгенерировать наборы <a href="https://docs.substrate.io/v3/advanced/cryptography/#public-key-cryptography">ключей</a> для аккаунтов, которые будут использоваться для генерации и валидации блоков. Сделать это можно различными способами (сгенерировать вручную, через криптокошельки, специальные приложения и т.д.). Тут будет описан способ создания ключей через команду <code>key</code> для имеющегося шаблона узла (на основе которого был сделан DApp).</p>
+<blockquote>
+<p>В целях безопасности следует генерировать ключи на <a href="https://ru.wikipedia.org/wiki/%D0%92%D0%BE%D0%B7%D0%B4%D1%83%D1%88%D0%BD%D1%8B%D0%B9_%D0%B7%D0%B0%D0%B7%D0%BE%D1%80_(%D1%81%D0%B5%D1%82%D0%B8_%D0%BF%D0%B5%D1%80%D0%B5%D0%B4%D0%B0%D1%87%D0%B8_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85)">машине</a> которая, в идеале, никогда не подключалась к внешней сети. Как минимум стоит отключать интернет-соединение при создании ключей, которые планируется использовать на “реальных” блокчейнах. В рамках этой лабораторной работы можно генерировать ключи при активном подключении к сети, но не стоит использовать их нигде кроме данного DApp.</p>
+</blockquote>
+<ol>
+<li>
+<p>Сперва сгенерируем секретную фразу и ключи (из директории с репозиторием). Надо ввести и запомнить пароль,а также сохранить все сгенерированные даные. Они будут использоваться для Aura.</p>
+<pre class=" language-bash"><code class="prism  language-bash">./target/release/node-template key generate --scheme Sr25519 --password-interactive
+</code></pre>
+<pre class=" language-bash"><code class="prism  language-bash"><span class="token comment"># пример вывода</span>
+Secret phrase:  pig giraffe ceiling enter weird liar orange decline behind total despair fly
+Secret seed:       0x0087016ebbdcf03d1b7b2ad9a958e14a43f2351cd42f2f0a973771b90fb0112f
+Public key <span class="token punctuation">(</span>hex<span class="token punctuation">)</span>:  0x1a4cc824f6585859851f818e71ac63cf6fdc81018189809814677b2a4699cf45
+Account ID:        0x1a4cc824f6585859851f818e71ac63cf6fdc81018189809814677b2a4699cf45
+Public key <span class="token punctuation">(</span>SS58<span class="token punctuation">)</span>: 5CfBuoHDvZ4fd8jkLQicNL8tgjnK8pVG9AiuJrsNrRAx6CNW
+SS58 Address:      5CfBuoHDvZ4fd8jkLQicNL8tgjnK8pVG9AiuJrsNrRAx6CNW
+</code></pre>
+</li>
+<li>
+<p>Сгенерируем и сохраним ключи для GRANDPA, <strong>унаследовав</strong> секретную фразу, полученную на предыдущем шаге (в примере подается фраза, сгенерированная на прошлом шаге).</p>
+<pre class=" language-bash"><code class="prism  language-bash">./target/release/node-template key inspect --password-interactive --scheme Ed25519 <span class="token string">"pig giraffe ceiling enter weird liar orange decline behind total despair fly"</span>
+</code></pre>
+<pre class=" language-bash"><code class="prism  language-bash"><span class="token comment"># пример вывода</span>
+Secret phrase <span class="token variable"><span class="token variable">`</span>pig giraffe ceiling enter weird liar orange decline behind total despair fly<span class="token variable">`</span></span> is account:
+Secret seed:       0x0087016ebbdcf03d1b7b2ad9a958e14a43f2351cd42f2f0a973771b90fb0112f
+Public key <span class="token punctuation">(</span>hex<span class="token punctuation">)</span>:  0x2577ba03f47cdbea161851d737e41200e471cd7a31a5c88242a527837efc1e7b
+Public key <span class="token punctuation">(</span>SS58<span class="token punctuation">)</span>: 5CuqCGfwqhjGzSqz5mnq36tMe651mU9Ji8xQ4JRuUTvPcjVN
+Account ID:        0x2577ba03f47cdbea161851d737e41200e471cd7a31a5c88242a527837efc1e7b
+SS58 Address:      5CuqCGfwqhjGzSqz5mnq36tMe651mU9Ji8xQ4JRuUTvPcjVN
+</code></pre>
+</li>
+<li>
+<p>Повторим два предыдущих шага. В итоге должны получить четыре набора ключей: два уникальных для Aura и два унаследованных для GRANDPA.</p>
+</li>
+</ol>
+<h3 id="запуск-первого-узла">Запуск первого узла</h3>
+<p>Для запуска сети требуется наличие спецификации. Это может быть как заранее определенная спецификация (<code>local</code> и др.), так и сконфигурированная вручную.</p>
+<p>При создании новой спецификации можно использовать уже предопределенные.</p>
+<ol>
+<li>
+<p>Экспортируем спецификацию <code>local</code> в файл <code>customSpec.json</code>.</p>
+<pre class=" language-bash"><code class="prism  language-bash">./target/release/node-template build-spec --disable-default-bootnode --chain local  <span class="token operator">&gt;</span> customSpec.json
+</code></pre>
+</li>
+<li>
+<p>В получившемся файле, помимо прочих данных, также содержится весь Wasm бинарник для рантайма. В файле необходимо поменять следующие поля</p>
+<ul>
+<li>Имя спецификации:</li>
+</ul>
+<pre class=" language-bash"><code class="prism  language-bash"><span class="token comment"># пример</span>
+<span class="token string">"name"</span><span class="token keyword">:</span>  <span class="token string">"Custom Blockchain Network"</span>,
+</code></pre>
+<ul>
+<li>Поле <code>aura</code>. Сюда вместо ключей Алисы и Боба следует добавить Sr25519 SS58 ключи, сгенерированные ранее (SS58 Address).</li>
+<li>Поле <code>grandpa</code>. Вместо ключей Алисы и Боба добавляем соответствующие Ed25519 SS58 ключи (SS58 Address). В отличии от <code>aura</code>, здесь для <code>authorities</code> стоит два значение. Второе указывает на вес голоса конкретного аккаунта.</li>
+</ul>
+</li>
+<li>
+<p>После добавление валидаторов (каждый из которых должен иметь уникальный ключ), нужно сохранить файл и сконвертировать получившуюся спецификацию в raw формат, который будет подан на вход узлу.</p>
+<pre class=" language-bash"><code class="prism  language-bash">./target/release/node-template build-spec --chain<span class="token operator">=</span>customSpec.json --raw --disable-default-bootnode <span class="token operator">&gt;</span> customSpecRaw.json
+</code></pre>
+</li>
+<li>
+<p>Затем запустим первый узел блокчейн-сети.</p>
+<pre class=" language-bash"><code class="prism  language-bash">./target/release/node-template \
+--base-path /tmp/node01 \
+--chain ./customSpecRaw.json \
+--port 30333 \
+--ws-port 9945 \
+--rpc-port 9933 \
+--telemetry-url <span class="token string">"wss://telemetry.polkadot.io/submit/ 0"</span> \
+--validator \
+--rpc-methods Unsafe \
+--name MyNode01
+</code></pre>
+</li>
+</ol>
+<blockquote>
+<p>При запуске узлов в докер-контейнерах, нужно будет добавить флаги <code>--unsafe-ws-external</code> и <code>--unsafe-rpc-external</code>, чтобы к узлам можно было обратиться извне.</p>
+</blockquote>
+<ol start="5">
+<li>
+<p>В команде, вызываемой выше:</p>
+<ul>
+<li><code>--base-path</code> - указывает где будут сохраняться данные блокчейна для этого узла;</li>
+<li><code>--chain</code> - указывает путь к спецификации блокчейна;
+<ul>
+<li><code>--port</code> - порт для общения с другими узлами по p2p-сети;</li>
+</ul>
+</li>
+<li><code>--ws-port</code> - порт для входящего WebSocket траффика (по дефолту 9944);</li>
+<li><code>--rpc-port</code> - порт для использования RPC (remote procedure call);</li>
+<li><code>--telemetry-url</code> - куда будет отправляться различная телеметрия (для учебных целей можно использовать указанную выше ссылку и посмотреть там данные по сети в реальном времени);</li>
+<li><code>--validator</code> - указывает, что этот узел участвует в генерации и утверждении новых блоков;</li>
+<li><code>--name</code> - имя узла</li>
+</ul>
+</li>
+<li>
+<p>После запуска нужно запомнить значение <strong>Local node identity</strong>, которое будет использоваться при подключении последующих узлов.</p>
+</li>
+</ol>
+<h3 id="добавление-ключей-в-keystore">Добавление ключей в keystore</h3>
+<p>Несмотря на то, что сеть уже запущена, никаких новых блоков не генерируется. Для того, чтобы сеть работала корректно, необходимо для каждого узла добавить ключи Aura и GRANDPA.</p>
+<p>Как и при генерации ключей, здесь есть несколько вариантов (через RPC, curl и др.), но описан будет способ добавления через команду <code>key</code> для шаблона узла.</p>
+<ol>
+<li>
+<p>Добавим Aura ключ для первого узла. В качестве параметра для флага <code>--suri</code> подается поле <code>Secret seed</code> из сгенерированного Sr25519 ключа.</p>
+<pre class=" language-bash"><code class="prism  language-bash">./target/release/node-template key insert --base-path /tmp/node01 \
+--chain customSpecRaw.json \
+--scheme Sr25519 \
+--suri секретный-сид \
+--password-interactive \
+--key-type aura
+</code></pre>
+</li>
+<li>
+<p>Добавим GRANDPA ключ для первого узла. В качестве параметра для флага <code>--suri</code> подается поле <code>Secret seed</code> из сгенерированного Ed25519 ключа <strong>соответствующего аккаунта</strong> (который унаследован от аккаунта, использованного в первом шаге).</p>
+<pre class=" language-bash"><code class="prism  language-bash">./target/release/node-template key insert --base-path /tmp/node01 \
+--chain customSpecRaw.json \
+--scheme Ed25519 \
+--suri секретный-сид \
+--password-interactive \
+--key-type gran
+</code></pre>
+</li>
+<li>
+<p>В качестве пароля на предыдущих шагах, используем пароль, введенный при генерации ключей.</p>
+</li>
+<li>
+<p>Убедимся, что ключи были успешно добавлены (должно быть два значения).</p>
+<pre class=" language-bash"><code class="prism  language-bash"><span class="token function">ls</span> /tmp/node01/chains/local_testnet/keystore
+</code></pre>
+</li>
+</ol>
+<h3 id="запуск-второго-и-последующих-узлов-с-добавлением-новых-ключей-в-keystore-соответствующих-узлов">Запуск второго (и последующих) узлов с добавлением новых ключей в keystore соответствующих узлов</h3>
+<ol>
+<li>
+<p>Запускаем второй узел.</p>
+<pre class=" language-bash"><code class="prism  language-bash">./target/release/node-template \
+--base-path /tmp/node02 \
+--chain ./customSpecRaw.json \
+--port 30334 \
+--ws-port 9946 \
+--rpc-port 9934 \
+--telemetry-url <span class="token string">"wss://telemetry.polkadot.io/submit/ 0"</span> \
+--validator \
+--rpc-methods Unsafe \
+--name MyNode02 \
+--bootnodes /ip4/127.0.0.1/tcp/30333/p2p/здесь-указывается-local-node-indentity \
+--password-interactive
+</code></pre>
+</li>
+<li>
+<p>Для данной сети единственным <strong>bootnode</strong> является первый узел. В соответствии с названием, подобная нода является стартовой. Одним из его назначений является обнаружение других узлов и передача данных о них другим нодам в сети.</p>
+</li>
+<li>
+<p>Добавим Aura и GRANDPA ключи в keystore для второго узла, используя вторую пару соответствующих ключей.</p>
+<pre class=" language-bash"><code class="prism  language-bash">./target/release/node-template key insert --base-path /tmp/node02 \
+--chain customSpecRaw.json \
+--scheme Sr25519 \
+--suri секретный-сид-второго-аккаунта \
+--password-interactive \
+--key-type aura
+</code></pre>
+<pre class=" language-bash"><code class="prism  language-bash">./target/release/node-template key insert --base-path /tmp/node02 \
+--chain customSpecRaw.json \
+--scheme Ed25519 \
+--suri секретный-сид-второго-аккаунта \
+--password-interactive \
+--key-type gran
+</code></pre>
+</li>
+<li>
+<p>Узел, в keystore которого добавляется GRANDPA ключ, требуется перезапустить.</p>
+</li>
+<li>
+<p>После того, как узлы были перезапущены и в сети активно 66% и более узлов с аккаунтами GRANDPA, блоки начнут добавляться в блокчейн.</p>
+</li>
+<li>
+<p>Наиболее подробно состояние сети можно посмотреть тут: <a href="https://polkadot.js.org/apps">https://polkadot.js.org/apps</a>. Надо указать адрес сервера и порт с которым по вебсокету будет соединяться веб-приложение.</p>
+</li>
+</ol>
+<h2 id="задание">Задание</h2>
+<p>Создать децентрализованное приложение, реализующее концепцию <strong>PoE</strong> (Proof of Existance, доказательство существования) и позволяющее пользователям “владеть” объектами, представленными в виде файла, и “продавать” их за сумму, определяемую владельцем.</p>
+<ul>
+<li>Пользователь должен владеть самим содержимым файла, а не его названием (и другими метаданными).</li>
+<li>Само содержимое файла не должно храниться на блокчейне, вместо этого необходимо считать его хеш.</li>
+<li>Потенциальные коллизии допустимы в рамках задания и от них можно не избавляться.</li>
+<li>Для получения “права владения” файлом пользователю достаточно просто указать файл и желаемую цену для выкупа.</li>
+<li>Обычный пользователь не должен иметь возможности завладеть чужим файлом, но он может купить его за <strong>полную</strong> указанную стоимость.</li>
+<li>Владелец при этом не должен иметь возможности купить файл сам у себя.</li>
+<li>Нужно реализовать полностью готовое приложение (включая фронтенд).</li>
+<li>Хеширование файла должно происходить на стороне фронтенда.</li>
+<li>Нужно локально поднять собственную сеть как минимум из <strong>трех</strong> узлов, которая сохранит данные даже при отключении всех узлов.</li>
+<li>Все операции (кроме SUDO) должны проводиться с использованием собственных уникальных аккаунтов (не Alice, не Bob, не Charlie и т.д.).</li>
+</ul>
+<h3 id="советы">Советы</h3>
+<ul>
+<li>
+<p>Для операций, связанных с переводом некоей валюты, пригодится макрос <a href="https://docs.substrate.io/rustdocs/latest/frame_support/attr.transactional.html"><code>#[transactional]</code></a>. Подключить его можно указав в начале описания модуля паллета:</p>
+<pre class=" language-rust"><code class="prism  language-rust"><span class="token keyword">pub</span>  <span class="token keyword">mod</span>  pallet  <span class="token punctuation">{</span>
+    <span class="token keyword">use</span> frame_support<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token punctuation">{</span>
+        transactional
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    <span class="token punctuation">...</span>
+</code></pre>
+</li>
+<li>
+<p>В качестве Storage стоит использовать <a href="https://docs.substrate.io/rustdocs/latest/frame_support/storage/trait.StorageMap.html">StorageMap</a>, где ключ - хеш файла, представленного в виде вектора байтов (<code>u8</code>), а значение - tuple, содержащий <a href="https://docs.substrate.io/rustdocs/latest/sp_runtime/traits/trait.IdentifyAccount.html">AccountId</a> (в изменяемом паллете представлен в виде дженерика, сам тип передается из рантайма на основе соответствующего <a href="https://docs.substrate.io/rustdocs/latest/pallet_balances/index.html">паллета</a>) и цену за выкуп.</p>
+</li>
+<li>
+<p>Для возможности осуществлять обмен валюты между пользователями, стоит использовать типы, удовлетворяющие трейту <a href="https://docs.substrate.io/rustdocs/latest/frame_support/traits/tokens/currency/trait.Currency.html"><code>Currency</code></a>. Существует паллет Balances, имплементирующий данный трейт. Для его использования следует сделать следующее:</p>
+<ol>
+<li>Передать в паллет через <strong>рантайм конфиг</strong> тип Currency из паллета Balances.</li>
+</ol>
+<pre class=" language-rust"><code class="prism  language-rust"><span class="token keyword">impl</span> <span class="token operator">*</span>название паллета<span class="token operator">*</span><span class="token punctuation">:</span><span class="token punctuation">:</span>Config  <span class="token keyword">for</span>  Runtime  <span class="token punctuation">{</span>
+    <span class="token punctuation">...</span>
+    <span class="token keyword">type</span> Currency <span class="token operator">=</span> Balances<span class="token punctuation">;</span>
+    <span class="token punctuation">...</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<ol start="2">
+<li>Объявить использование трейта <code>Currency</code> в самом паллете.</li>
+</ol>
+<pre class=" language-rust"><code class="prism  language-rust"><span class="token keyword">pub</span> <span class="token keyword">mod</span> pallet <span class="token punctuation">{</span>
+    <span class="token punctuation">...</span>
+    <span class="token keyword">use</span> frame_support<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token punctuation">{</span>
+        <span class="token punctuation">...</span>
+        traits<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token punctuation">{</span><span class="token punctuation">...</span><span class="token punctuation">,</span> Currency<span class="token punctuation">,</span> <span class="token punctuation">...</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token punctuation">...</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">...</span>
+</code></pre>
+<ol start="3">
+<li>В конфиге паллета указать используемый тип Currency, удовлетворяющий трейту <code>Currency</code>.</li>
+</ol>
+<pre class=" language-rust"><code class="prism  language-rust"><span class="token attribute attr-name">#[pallet::config]</span>
+<span class="token keyword">pub</span> <span class="token keyword">trait</span> Config<span class="token punctuation">:</span> frame_system<span class="token punctuation">:</span><span class="token punctuation">:</span>Config <span class="token punctuation">{</span>
+<span class="token punctuation">...</span>
+    <span class="token keyword">type</span> Currency<span class="token punctuation">:</span> Currency<span class="token operator">&lt;</span>Self<span class="token punctuation">:</span><span class="token punctuation">:</span>AccountId<span class="token operator">&gt;</span><span class="token punctuation">;</span>
+<span class="token punctuation">...</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<ol start="4">
+<li>Конкретные значения баланса через обозначенный тип можно получить, используя следующую конструкцию. Подробнее про нее можно почитать <a href="https://doc.rust-lang.org/book/ch19-03-advanced-traits.html#specifying-placeholder-types-in-trait-definitions-with-associated-types">тут</a>.</li>
+</ol>
+<pre class=" language-rust"><code class="prism  language-rust"><span class="token operator">&lt;&lt;</span>T  <span class="token keyword">as</span>  Config<span class="token operator">&gt;</span><span class="token punctuation">:</span><span class="token punctuation">:</span>Currency  <span class="token keyword">as</span>  Currency<span class="token operator">&lt;&lt;</span>T  <span class="token keyword">as</span>  frame_system<span class="token punctuation">:</span><span class="token punctuation">:</span>Config<span class="token operator">&gt;</span><span class="token punctuation">:</span><span class="token punctuation">:</span>AccountId<span class="token operator">&gt;&gt;</span><span class="token punctuation">:</span><span class="token punctuation">:</span>Balance
+</code></pre>
+<p>Описанный выше тип можно хранить в Storage, пробрасывать в ивенты и ошибки и передавать в качестве аргументов функций, проводить операции сравнения и т.п.</p>
+<ol start="5">
+<li>Вместо того, чтобы каждый раз писать вышеуказанное, можно определить отдельный тип и использовать его.</li>
+</ol>
+<pre class=" language-rust"><code class="prism  language-rust"><span class="token keyword">type</span> BalanceValue<span class="token operator">&lt;</span>T<span class="token operator">&gt;</span> <span class="token operator">=</span> <span class="token operator">&lt;&lt;</span>T <span class="token keyword">as</span> Config<span class="token operator">&gt;</span><span class="token punctuation">:</span><span class="token punctuation">:</span>Currency  <span class="token keyword">as</span> Currency<span class="token operator">&lt;&lt;</span>T <span class="token keyword">as</span> frame_system<span class="token punctuation">:</span><span class="token punctuation">:</span>Config<span class="token operator">&gt;</span><span class="token punctuation">:</span><span class="token punctuation">:</span>AccountId<span class="token operator">&gt;&gt;</span><span class="token punctuation">:</span><span class="token punctuation">:</span>Balance<span class="token punctuation">;</span>
+</code></pre>
+</li>
+<li>
+<p>Для обработки файлов на фронтенде можно использовать следующее:</p>
+<pre class=" language-js"><code class="prism  language-js"><span class="token operator">...</span>
+
+<span class="token comment">//Для хеширования файлов</span>
+<span class="token keyword">import</span>  <span class="token punctuation">{</span>blake2AsHex<span class="token punctuation">}</span>  <span class="token keyword">from</span>  <span class="token string">'@polkadot/util-crypto'</span>
+
+<span class="token keyword">function</span>  <span class="token function">Main</span><span class="token punctuation">(</span>props<span class="token punctuation">)</span>  <span class="token punctuation">{</span>
+    <span class="token operator">...</span>
+    <span class="token comment">// Еще один React хук </span>
+    <span class="token keyword">const</span>  <span class="token punctuation">[</span>digest<span class="token punctuation">,</span> setDigest<span class="token punctuation">]</span>  <span class="token operator">=</span>  <span class="token function">useState</span><span class="token punctuation">(</span><span class="token string">''</span><span class="token punctuation">)</span>
+    <span class="token operator">...</span>
+    <span class="token keyword">let</span> fileReader<span class="token punctuation">;</span>
+    <span class="token comment">// Делает хеш на основе содержимого файла в шестнадцатиричном виде (256 бит - 64 hex разряда)</span>
+    <span class="token keyword">const</span> <span class="token function-variable function">bufferToDigest</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token keyword">const</span> content <span class="token operator">=</span> Array<span class="token punctuation">.</span><span class="token keyword">from</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Uint8Array</span><span class="token punctuation">(</span>fileReader<span class="token punctuation">.</span>result<span class="token punctuation">)</span><span class="token punctuation">)</span>
+          <span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>b <span class="token operator">=&gt;</span> b<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token number">16</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">padStart</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token string">'0'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+          <span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token string">''</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">const</span> hash <span class="token operator">=</span> <span class="token function">blake2AsHex</span><span class="token punctuation">(</span>content<span class="token punctuation">,</span> <span class="token number">256</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">setDigest</span><span class="token punctuation">(</span>hash<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    
+   
+    <span class="token comment">// Коллбэк при загрузке файла</span>
+    <span class="token keyword">const</span> <span class="token function-variable function">handleFileChosen</span> <span class="token operator">=</span> file <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        fileReader <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">FileReader</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        fileReader<span class="token punctuation">.</span>onloadend <span class="token operator">=</span> bufferToDigest<span class="token punctuation">;</span>
+        fileReader<span class="token punctuation">.</span><span class="token function">readAsArrayBuffer</span><span class="token punctuation">(</span>file<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// Фронтенд должен проверять текущее состояние хранилища не только при его апдейте, но и при попытке загрузить (не отправить!) новый файл. </span>
+    <span class="token function">useEffect</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token operator">=&gt;</span>  <span class="token punctuation">{</span>
+        <span class="token operator">...</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">[</span>digest<span class="token punctuation">,</span> api<span class="token punctuation">.</span>query<span class="token punctuation">.</span>название_паллета<span class="token punctuation">]</span><span class="token punctuation">)</span>
+    
+    <span class="token operator">...</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+</li>
+<li>
+<p>Для проведения операций с получившимся DApp следует использовать криптокошельки с хранящимися на них данными об аккаунтах.</p>
+</li>
+</ul>
+<p>В общем целом выполнение задание сводится к следующему:</p>
+<ul>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox"> Продумать типы и ограничения</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox"> Настроить конфиг паллета</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox"> Описать генерируемые ивенты</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox"> Описать возможные ошибки</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox"> Продумать формат Storage (их может быть несколько)</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox"> Написать функцию получения владения файлом</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox"> Написать функцию покупки файла</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox"> Написать фронтенд на основе шаблона (используя куски кода, которые были даны выше)</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox"> Поднять блокчейн-сеть</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox"> Поднять фронтенд-сервер</li>
+</ul>
+<h2 id="полезные-ссылки">Полезные ссылки</h2>
+<ul>
+<li>Официальный сайт Substrate - <a href="https://substrate.io/">https://substrate.io/</a></li>
+<li>Туториалы для Substrate - <a href="https://docs.substrate.io/tutorials/v3/">https://docs.substrate.io/tutorials/v3/</a></li>
+<li>Документация для Substrate - <a href="https://paritytech.github.io/substrate/master/sc_service/index.html">https://paritytech.github.io/substrate/master/sc_service/index.html</a></li>
+<li>Официальный сайт платформы Polkadot - <a href="https://polkadot.network/">https://polkadot.network/</a></li>
+<li>Веб-приложение Polkadot - <a href="https://polkadot.js.org/">https://polkadot.js.org/</a></li>
+<li>libp2p - <a href="https://libp2p.io/">https://libp2p.io/</a></li>
+<li>Metamask - <a href="https://metamask.io/">https://metamask.io/</a></li>
+<li>Документация Rust - <a href="https://doc.rust-lang.org/std/">https://doc.rust-lang.org/std/</a></li>
+<li>Учебник Rust - <a href="https://doc.rust-lang.org/book/">https://doc.rust-lang.org/book/</a></li>
+<li>Rust playground - <a href="https://play.rust-lang.org/">https://play.rust-lang.org/</a></li>
+<li>Документация по докеру - <a href="https://docs.docker.com/">https://docs.docker.com/</a></li>
+<li>Паттерны блокчейн разработки - <a href="https://research.csiro.au/blockchainpatterns/">https://research.csiro.au/blockchainpatterns/</a></li>
+<li>Немножко о DAG - <a href="https://cointelegraph.com/explained/what-is-a-directed-acyclic-graph-in-cryptocurrency-how-does-dag-work#:~:text=A%20directed%20acyclic%20graph%20or,on%20top%20of%20one%20another">https://cointelegraph.com/explained/what-is-a-directed-acyclic-graph-in-cryptocurrency-how-does-dag-work#:~:text=A directed acyclic graph or,on top of one another</a>.</li>
+<li>IPFS, межпланетная файловая система - <a href="https://ipfs.io/">https://ipfs.io/</a></li>
+<li>Merkle proof - <a href="https://tsc.bitcoinassociation.net/standards/merkle-proof-standardised-format/">https://tsc.bitcoinassociation.net/standards/merkle-proof-standardised-format/</a></li>
+<li>Смарт-контракты в сети Ethereum - <a href="https://www.loginradius.com/blog/engineering/guest-post/ethereum-smart-contract-tutorial/">https://www.loginradius.com/blog/engineering/guest-post/ethereum-smart-contract-tutorial/</a></li>
+<li>Игра-туториал по Solidity - <a href="https://cryptozombies.io/">https://cryptozombies.io/</a></li>
+<li>Вебассемблер - <a href="https://webassembly.org/">https://webassembly.org/</a></li>
+<li>Cosmos, фреймворк для написания блокчейн-приложений на Go - <a href="https://tutorials.cosmos.network/">https://tutorials.cosmos.network/</a></li>
+<li>Truffle, фреймворк для написания смарт-контрактов на Solidity для Ethereum <a href="https://trufflesuite.com/">https://trufflesuite.com/</a></li>
+<li><a href="https://hardhat.org/">https://hardhat.org/</a></li>
+<li><a href="https://www.alchemy.com/">https://www.alchemy.com/</a></li>
+</ul>
+
+    </div>
+  </div>
+</body>
+
+</html>
